@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 
-import jwt from "jsonwebtoken";
+import { verify } from "jsonwebtoken";
 
 export function isAdmin(req: Request, res: Response, next: Function) {
   const token = req.headers;
   try {
-    const isTokenvalid = jwt.verify(
+    const isTokenvalid = verify(
       token["auth-token"] as string,
       process.env.JWT_SECRET!
     );

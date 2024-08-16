@@ -10,3 +10,17 @@ export interface IUser {
   role: UserRole;
   avatar: string | undefined;
 }
+
+export interface IProduct {
+  _id: string | undefined;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  image: string;
+}
+
+export interface ICart {
+  products: { _id: string; quantity: number }[];
+  totalPrice: number;
+}

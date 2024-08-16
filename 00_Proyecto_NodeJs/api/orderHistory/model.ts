@@ -12,11 +12,9 @@ const orderHistorySchema = new Schema({
   },
   carts: [
     {
-      cart: {
-        type: Schema.Types.ObjectId,
-        ref: "Cart",
-        required: true,
-      },
+      type: Schema.Types.ObjectId,
+      ref: "Cart",
+      required: true,
     },
   ],
 });
