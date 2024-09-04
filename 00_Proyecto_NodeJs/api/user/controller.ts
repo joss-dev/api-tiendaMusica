@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { userService } from "./service";
-import User from "./model";
 
-const { getUser, getUsers, createUser, loginUser } = userService;
+
+const { getUser, getUsers, createUser, loginUser, deleteUser, editUser } = userService;
 
 class UserController {
   async getUsers(req: Request, res: Response) {
@@ -40,7 +40,7 @@ class UserController {
   }
   async deleteUser(req: Request, res: Response) {
     try {
-      const user = await User.findByIdAndDelete(req.params.id);
+      const user = await deleteUser(req.params.id);
       return res.status(200).json(user);
     } catch (error) {
       return res.status(400).json({ error: "User not found" });
@@ -48,9 +48,7 @@ class UserController {
   }
   async editUser(req: Request, res: Response) {
     try {
-      const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-      });
+      const user = await editUser(req.params.id, req.body);
       return res.status(200).json(user);
     } catch (error) {
       return res.status(400).json({ error: "User not found" });

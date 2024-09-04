@@ -66,6 +66,24 @@ class UserService {
       throw new Error((error as Error).message);
     }
   }
+  async editUser(id: string, user: Partial<IUser>) {
+    try {     
+      const {password, role,...updatedFields} = user;
+      const editedUser = await editUser(id, updatedFields);
+      return editedUser;
+    } catch (error) {
+      throw Error((error as Error).message);
+    }
+  }
+
+  async deleteUser(id: string) {
+    try {
+      const deletedUser = await deleteUser(id);
+      return deletedUser;
+    }catch (error) {
+      throw Error((error as Error).message);
+    }
+  }
 }
 
 export const userService = new UserService();

@@ -34,7 +34,7 @@ class UserDao {
       throw Error((error as Error).message);
     }
   }
-  async editUser(userId: string, user: IUser) {
+  async editUser(userId: string, user: Partial<IUser>) {
     try {
       const updatedUser = await User.findByIdAndUpdate(userId, user, {
         new: true,

@@ -9,5 +9,7 @@ usersRouter.post("/create-user", userController.createUser);
 
 usersRouter.delete("/delete-user/:id", userController.deleteUser);
 
+usersRouter.get("/get-user-by-username/:username", userController.getUserByUsername);
+
 export default usersRouter;
 
