@@ -51,3 +51,9 @@ Thumbs.db
 *.mov
 *.wmv
 
+
+# capertas de ejemplos 
+ejemplo_clase_07/
+ejemplo_clase_08/
+ejemplo_clase_09_JWT/
+
