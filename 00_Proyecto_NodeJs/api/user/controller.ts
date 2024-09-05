@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { userService } from "./service";
 
 
-const { getUser, getUsers, createUser, loginUser, deleteUser, editUser } = userService;
+const { getUser, getUsers, createUser, loginUser, deleteUser, editUser, updatedRole } = userService;
 
 class UserController {
   async getUsers(req: Request, res: Response) {
@@ -49,6 +49,15 @@ class UserController {
   async editUser(req: Request, res: Response) {
     try {
       const user = await editUser(req.params.id, req.body);
+      return res.status(200).json(user);
+    } catch (error) {
+      return res.status(400).send({ error: (error as Error).message });
+    }
+  }
+
+  async updatedRole(req: Request, res: Response) {
+    try {
+      const user = await updatedRole(req.params.id, req.body);
       return res.status(200).json(user);
     } catch (error) {
       return res.status(400).send({ error: (error as Error).message });

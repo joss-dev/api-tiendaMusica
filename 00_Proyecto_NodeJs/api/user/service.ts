@@ -1,4 +1,4 @@
-import { IUser } from "../../types";
+import { IUser, UserRole } from "../../types";
 import { userDao } from "./dao";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
@@ -13,6 +13,7 @@ const {
   createUser,
   editUser,
   deleteUser,
+  updatedRole
 } = userDao;
 
 class UserService {
@@ -67,13 +68,37 @@ class UserService {
     }
   }
   async editUser(id: string, user: Partial<IUser>) {
-    try { 
-      if(Object.keys(user).length === 0) {
+    try {
+      if (Object.keys(user).length === 0) {
         throw new Error("No user data provided");
-      }    
-      const {password, role,...updatedFields} = user;
+      }
+      const { password, role, ...updatedFields } = user;
       const editedUser = await editUser(id, updatedFields);
       return editedUser;
+    } catch (error) {
+      throw Error((error as Error).message);
+    }
+  }
+
+  async updatedRole(id: string, user: Partial<IUser>) {
+    try {
+      if (Object.keys(user).length === 0) {
+        throw new Error("No user data provided");
+      }
+
+      const { role } = user;
+
+      if (!role) {
+        throw new Error("No role provided");
+      }
+
+      const allowedRoles: UserRole[] = ["admin", "comprador", "vendedor"];
+      if (!allowedRoles.includes(role as UserRole)) {
+        throw new Error(`Invalid role provided: ${role}`);
+      }
+
+      const updateRole = await updatedRole(id, role);
+      return updateRole;
     } catch (error) {
       throw Error((error as Error).message);
     }
@@ -82,12 +107,13 @@ class UserService {
   async deleteUser(id: string) {
     try {
       const user = await getUserById(id);
-      if(!user) {
+      if (!user) {
+        console.log("User not found");
         throw new Error("User not found");
-       }
+      }
       const deletedUser = await deleteUser(id);
       return deletedUser;
-    }catch (error) {
+    } catch (error) {
       throw Error((error as Error).message);
     }
   }

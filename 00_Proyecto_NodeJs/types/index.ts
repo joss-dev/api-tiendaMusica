@@ -1,4 +1,4 @@
-type UserRole = "admin" | "comprador" | "vendedor" | undefined;
+export type UserRole = "admin" | "comprador" | "vendedor" | undefined;
 
 export interface IUser {
   _id: string | undefined;

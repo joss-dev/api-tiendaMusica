@@ -1,5 +1,6 @@
 import User from "./model";
-import { IUser } from "../../types";
+import { IUser, UserRole } from "../../types";
+
 
 class UserDao {
   async getAllUsers() {
@@ -44,6 +45,19 @@ class UserDao {
       throw Error((error as Error).message);
     }
   }
+
+  async updatedRole(userId: string, role: UserRole) {
+    try {
+      const updatedUser = await User.findByIdAndUpdate(userId,
+        { role: role },
+        { new: true }
+      );
+      return updatedUser;
+    } catch (error) {
+      throw Error((error as Error).message);
+    }
+  }
+
   async deleteUser(userId: string) {
     try {
       const deletedUser = await User.findByIdAndDelete(userId);
