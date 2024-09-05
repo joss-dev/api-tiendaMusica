@@ -67,7 +67,10 @@ class UserService {
     }
   }
   async editUser(id: string, user: Partial<IUser>) {
-    try {     
+    try { 
+      if(Object.keys(user).length === 0) {
+        throw new Error("No user data provided");
+      }    
       const {password, role,...updatedFields} = user;
       const editedUser = await editUser(id, updatedFields);
       return editedUser;
@@ -78,6 +81,10 @@ class UserService {
 
   async deleteUser(id: string) {
     try {
+      const user = await getUserById(id);
+      if(!user) {
+        throw new Error("User not found");
+       }
       const deletedUser = await deleteUser(id);
       return deletedUser;
     }catch (error) {
