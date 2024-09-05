@@ -31,7 +31,7 @@ class ProductController {
       const newProduct = await createProduct(product);
       return res.status(200).json(newProduct);
     } catch (error) {
-      return res.status(500).json({ error });
+      return res.status(500).send({ error: (error as Error).message });
     }
   }
   async deleteProduct(req: Request, res: Response) {
