@@ -45,11 +45,11 @@ class UserService {
       const { email, password } = user;
       const existingUser = await getUserByMail(email);
       if (!existingUser) {
-        throw new Error("Invalid email");
+        throw new Error("Invalid credentials");
       }
       const isPasswordValid = await compare(password, existingUser.password!);
       if (!isPasswordValid) {
-        throw new Error("Invalid password");
+        throw new Error("Invalid credentials");
       }
       const token = sign(
         {
