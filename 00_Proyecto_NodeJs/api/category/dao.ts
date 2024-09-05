@@ -17,9 +17,9 @@ class CategoryDao {
       throw Error((error as Error).message);
     }
   }
-  async createCategory(categoryName : string) {
+  async createCategory(categoryName : String) {
     try {
-      const newCategory = await Category.create(categoryName);
+      const newCategory = await Category.create({ name: categoryName });
       return newCategory;
     } catch (error) {
       throw Error((error as Error).message);

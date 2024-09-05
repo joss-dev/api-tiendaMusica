@@ -22,7 +22,7 @@ class CategoryService {
         }
     }
     
-    async createCategory(categoryName: string) {
+    async createCategory(categoryName: String) {
         try {
         const newCategory = await createCategory(categoryName);
         return newCategory;
