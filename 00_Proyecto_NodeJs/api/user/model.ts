@@ -36,6 +36,7 @@ const userSchema = new Schema({
     type: String,
     default: "",
   },
+  products: [{ type: Schema.Types.ObjectId, ref: "Product" }],
 });
 
 userSchema.pre("save", async function (next) {
