@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { productService } from "./service";
 import { ISearchParams } from "./types";
-const { getProduct, getProducts, createProduct, deleteProduct, editProduct } =
+const { getProduct, getProducts, createProduct, deleteProduct, editProduct, getProductsBySeller } =
   productService;
 
 class ProductController {
@@ -16,7 +16,6 @@ class ProductController {
   }
   async getProducts(req: Request, res: Response) {
     const searchParams: ISearchParams = req.query;
-    console.log(searchParams);
     try {
       const products = await getProducts(searchParams);
       return res.status(200).json(products);
@@ -51,6 +50,18 @@ class ProductController {
       return res.status(200).json(editedProduct);
     } catch (error) {
       return res.status(400).send({ error: (error as Error).message });
+    }
+  }
+  async getProductsBySeller(req: Request, res: Response) {
+    const { sellerId } = req.params;
+    try {
+      if (!sellerId) {
+        return res.status(400).json({ message: "Missing 'sellerId' parameter" });
+      }
+      const products = await getProductsBySeller(sellerId);
+      return res.status(200).json(products);
+    } catch (error) {
+      return res.status(500).send({ error: (error as Error).message });
     }
   }
 }

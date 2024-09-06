@@ -8,6 +8,7 @@ const {
   createProduct,
   editProduct,
   deleteProduct,
+  getProductsBySeller,
 } = productDao;
 
 class ProductService {
@@ -77,6 +78,15 @@ class ProductService {
     try {
       const deletedProduct = await deleteProduct(id);
       return deletedProduct;
+    } catch (error) {
+      throw Error((error as Error).message);
+    }
+  }
+
+  async getProductsBySeller(sellerId: string) {
+    try {
+      const products = getProductsBySeller(sellerId);
+      return products;
     } catch (error) {
       throw Error((error as Error).message);
     }

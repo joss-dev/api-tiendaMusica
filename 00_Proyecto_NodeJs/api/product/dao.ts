@@ -74,5 +74,13 @@ class ProductDao {
       throw Error((error as Error).message);
     }
   }
+  async getProductsBySeller(sellerId: string) {
+    try {
+      const products = await Product.find({ seller: sellerId });
+      return products;
+    } catch (error) {
+      throw Error((error as Error).message);
+    }
+  }
 }
 export const productDao = new ProductDao();
