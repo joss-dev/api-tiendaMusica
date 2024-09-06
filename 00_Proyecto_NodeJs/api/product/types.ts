@@ -7,4 +7,5 @@ export interface ISearchParams {
   priceRange?: string;
   page?: string;
   limit?: string;
+  search?: string;
 }

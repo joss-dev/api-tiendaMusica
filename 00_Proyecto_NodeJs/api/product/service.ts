@@ -27,6 +27,7 @@ class ProductService {
       priceRange,
       page = "1",
       limit = "10",
+      search,
     } = searchParams;
     let priceStart: number | undefined;
     let priceEnd: number | undefined;
@@ -47,7 +48,8 @@ class ProductService {
         priceEnd,
         sort,
         page,
-        limit
+        limit,
+        search
       );
 
       return products;

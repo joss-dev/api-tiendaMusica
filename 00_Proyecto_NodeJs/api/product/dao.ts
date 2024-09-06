@@ -9,20 +9,30 @@ class ProductDao {
     priceEnd: number | undefined,
     sort: -1 | 1 | undefined,
     page: string,
-    limit: string
+    limit: string,
+    search: string | undefined
   ) {
     try {
       const skip = (Number(page) - 1) * Number(limit);
-      const products = await Product.find({
+      const query: any = {
         ...(category ? { category } : {}),
         ...(salersId ? { salersId } : {}),
         ...(priceStart && priceEnd
           ? { price: { $gte: priceStart, $lte: priceEnd } }
           : {}),
-      })
-        .sort(sort && { price: sort })
+        ...(search ? {
+          $or: [
+            { name: { $regex: search, $options: 'i' } },
+            { description: { $regex: search, $options: 'i' } }
+          ]
+        } : {})
+      };
+
+      const products = await Product.find(query)
+        .sort(sort ? { price: sort } : {})
         .skip(skip)
         .limit(Number(limit));
+
       return products;
     } catch (error) {
       throw Error((error as Error).message);
@@ -65,5 +75,4 @@ class ProductDao {
     }
   }
 }
-
 export const productDao = new ProductDao();

@@ -16,7 +16,7 @@ class ProductController {
   }
   async getProducts(req: Request, res: Response) {
     const searchParams: ISearchParams = req.query;
-  
+    console.log(searchParams);
     try {
       const products = await getProducts(searchParams);
       return res.status(200).json(products);
@@ -40,7 +40,7 @@ class ProductController {
       const deletedProduct = await deleteProduct(id);
       return res.status(200).json(deletedProduct);
     } catch (error) {
-      return res.status(400).json({ error });
+      return res.status(400).send({ error: (error as Error).message });
     }
   }
   async editProduct(req: Request, res: Response) {
@@ -50,7 +50,7 @@ class ProductController {
       const editedProduct = await editProduct(id, editedProductBody);
       return res.status(200).json(editedProduct);
     } catch (error) {
-      return res.status(400).json({ error });
+      return res.status(400).send({ error: (error as Error).message });
     }
   }
 }
